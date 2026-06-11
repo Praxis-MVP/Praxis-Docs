@@ -7,6 +7,9 @@ const DOCS_DIR = path.join(__dirname, '..', 'docs');
 const DIST_DIR = path.join(__dirname, '..', 'dist');
 const TEMPLATE_PATH = path.join(__dirname, '..', 'template.html');
 
+// Base path for GitHub Pages (repo name) - empty for root deployment
+const BASE_PATH = process.env.BASE_PATH || '/Praxis-Docs';
+
 // Clean and recreate dist directory
 function cleanDist() {
   if (fs.existsSync(DIST_DIR)) {
@@ -118,8 +121,8 @@ function renderNavigation(items, currentPath = '') {
       html += '</li>';
     } else {
       const isActive = item.href === currentPath ? ' class="active"' : '';
-      // Use absolute paths from root
-      html += `<li${isActive}><a href="/${item.href}">${item.title}</a></li>`;
+      // Use base path for GitHub Pages
+      html += `<li${isActive}><a href="${BASE_PATH}/${item.href}">${item.title}</a></li>`;
     }
   }
   html += '</ul>';
@@ -148,6 +151,7 @@ function processFile(filePath, relativePath) {
   const finalHtml = template
     .replace('{{title}}', title)
     .replace('{{description}}', description)
+    .replace('{{basePath}}', BASE_PATH)
     .replace('{{navigation}}', navHtml)
     .replace('{{content}}', html);
 
