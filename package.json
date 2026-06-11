@@ -4,7 +4,7 @@
   "description": "Documentation site built with Markdoc",
   "scripts": {
     "build": "node scripts/build.js",
-    "dev": "node scripts/build.js --watch",
+    "dev": "BASE_PATH= node scripts/build.js --watch",
     "serve": "npx serve dist"
   },
   "dependencies": {
